@@ -34,6 +34,23 @@ app.get('/games', (req, res) => {
   res.json(fakeDb.games);
 });
 
+app.get('/game/:id', (req, res) => {
+  if (isNaN(req.params.id)) {
+    res.sendStatus(400);
+  } else {
+    const id = parseInt(req.params.id, 10);
+
+    const game = fakeDb.games.find(g => g.id === id);
+
+    if (game != undefined) {
+      res.statusCode = 200;
+      res.json(game);
+    } else {
+      res.sendStatus(404);
+    }
+  }
+});
+
 app.listen(port, () =>
   console.log(`API started at port http://localhost:${port} 🚀`)
 );
