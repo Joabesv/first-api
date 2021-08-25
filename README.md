@@ -2,10 +2,13 @@
 
 ## 📖 O que eu aprendi
 
-- Como iniciar o processo de construção de APIS REST e conceitos Restful, utilizar express nessas construções, aprofundei estudos com Nodejs,
-  é um projeto realmente simples só para começar a montar a base de estudos com API, no futuro planejo adicionar um banco de dados
-  real a ele.
-- Também gostaria de melhorar as estruturas de if do código
+- Como iniciar o processo de construção de API REST e conceitos Restful, utilização express nessas construções, aprofundei estudos com Nodejs,
+  é um projeto realmente simples só para começar a montar a base de estudos com API.
+
+## Features para o futuro
+
+- Adicionar banco de dados real
+- Melhorar as estruturas de if do código
 
 ## Techs
 
