@@ -3,6 +3,18 @@ import express from 'express';
 const app = express();
 const port = 3456;
 
+function validate(object, schema) {
+  return Object.keys(schema)
+    .filter(key => !schema[key](object[key]))
+    .map(key => new Error(`${key} is invalid.`));
+}
+
+const gameSchema = {
+  title: value => typeof value === 'string',
+  price: n => n === +n && parseFloat(n) === n, // is number and float,
+  year: n => `${n}`.length === 4, // check if has 4 characters
+};
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -53,7 +65,14 @@ app.get('/game/:id', (req, res) => {
 
 app.post('/game', (req, res) => {
   const { title, price, year } = req.body;
+  const errors = validate({ title, price, year }, gameSchema);
 
+  if (errors.length !== 0) {
+    const invalidFields = errors.map(error => error.message).join(', ');
+    const message = `Os seguintes campos estao no formato errado: ${invalidFields}`;
+    return res.status(400).send({ message });
+  }
+  // tudo certo
   fakeDb.games.push({
     id: fakeDb.games.length + 1,
     title,
@@ -63,6 +82,7 @@ app.post('/game', (req, res) => {
 
   res.sendStatus(200);
 });
+
 /* 
   req.body, serve para pegar QUALQUER dado que você passe dentro
   da requisição POST
@@ -84,6 +104,7 @@ app.delete('/game/:id', (req, res) => {
   }
 });
 
+// editar
 app.put('/game/:id', (req, res) => {
   if (isNaN(req.params.id)) {
     res.sendStatus(400);
@@ -117,3 +138,6 @@ app.put('/game/:id', (req, res) => {
 app.listen(port, () =>
   console.log(`API started at port http://localhost:${port} 🚀`)
 );
+/**
+ 
+  */

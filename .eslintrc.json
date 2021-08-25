@@ -12,6 +12,7 @@
   "rules": {
     "no-console": "off",
     "no-restricted-globals": "off",
-    "eqeqeq": "off"
+    "eqeqeq": "off",
+    "consistent-return": "off"
   }
 }
